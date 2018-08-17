@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - LeftWall
+  - RightWall
+  - Ball
   layers:
   - Default
   - TransparentFX
@@ -15,7 +18,7 @@ TagManager:
   - 
   - Background
   - Player
-  - 
+  - Ball
   - 
   - 
   - 
@@ -46,4 +49,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2971172403
+    locked: 0
+  - name: Ball
+    uniqueID: 1119085239
     locked: 0

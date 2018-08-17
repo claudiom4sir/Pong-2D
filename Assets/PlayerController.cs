@@ -13,10 +13,12 @@ public class PlayerController : MonoBehaviour {
     float maxYMovement = 2.3f;
 
     Rigidbody2D rb;
+    Vector2 startPosition;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -31,16 +33,12 @@ public class PlayerController : MonoBehaviour {
     {
         Vector2 currentPosition = new Vector2(rb.transform.position.x, rb.transform.position.y);
         Vector2 newPosition = currentPosition + direction * speed * Time.fixedDeltaTime;
-        if(direction == Vector2.up)
-        {
-            if (newPosition.y <= maxYMovement)
-                rb.MovePosition(newPosition);
-        }
-        else if(direction == Vector2.down)
-        {
-            if (newPosition.y >= -maxYMovement)
-                rb.MovePosition(newPosition);
-        }
+        rb.MovePosition(newPosition);
+    }
+
+    public void ResetPosition()
+    {
+        rb.position = startPosition;
     }
 
 }
