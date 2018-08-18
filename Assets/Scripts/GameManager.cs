@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour {
     PauseUI pauseUI;
     [SerializeField]
     PlayerUI playerUI;
+    [SerializeField]
+    QuitUI quitUI;
 
     [Header("Players")]
     [SerializeField]
@@ -38,6 +40,8 @@ public class GameManager : MonoBehaviour {
 
     bool isInGame = false;
     BallController ballController;
+    bool isActiveWelcomeUI = true;
+    bool isActiveQuitUI = false;
 
     void Awake()
     {
@@ -47,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        pauseUI.enabled = false;
+        pauseUI.gameObject.SetActive(false);
         #region("DrawWall")
         DrawHorizontalWall(topWall, 1f, 0f, 0f, 0f, new Vector3(0.5f, 1f, 0f));
         DrawHorizontalWall(bottomWall, 1f, 0f, 0f, 0f, new Vector3(0.5f, 0f, 0f));
@@ -59,8 +63,15 @@ public class GameManager : MonoBehaviour {
             Debug.LogError("ballController in GamaManager is null");
     }
 
-    void Update()
+    public void NotifyWelcomeUIDisabled()
     {
+        isActiveWelcomeUI = false;
+    }
+
+    void Update() // is WelcoeUI or QuitUI are enabled, return immediatly
+    {
+        if (isActiveWelcomeUI || isActiveQuitUI)
+            return;
         if (Input.GetKeyDown(escKey))
             pauseUI.Toggle();
         if (isInGame)
@@ -71,7 +82,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public bool IsInGame()
+    public void Quit()
+    {
+        isActiveQuitUI = true;
+        SoundManager.singleton.DisableAllAudio();
+        quitUI.Quit();
+    }
+
+    public bool IsInGame() // if is isInGame is true, space bar doesn't work
     {
         return isInGame;
     }
